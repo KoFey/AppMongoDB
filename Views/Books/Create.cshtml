@@ -1,0 +1,60 @@
+﻿@model AppMongoDB.Models.Book
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Book</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="BookName" class="control-label"></label>
+                <input asp-for="BookName" class="form-control" />
+                <span asp-validation-for="BookName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Category" class="control-label"></label>
+                <input asp-for="Category" class="form-control" />
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="genre" class="control-label"></label>
+                <select asp-for="genre" asp-items="Html.GetEnumSelectList<Genre>()" multiple class="form-control selectpicker" data-live-search="true">
+                </select>
+                <span asp-validation-for="genre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Author.fullName" class="control-label"></label>
+                <input asp-for="Author.fullName" class="form-control" />
+                <span asp-validation-for="Author.fullName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Author.country" class="control-label"></label>
+                <input asp-for="Author.country" class="form-control" />
+                <span asp-validation-for="Author.fullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,49 @@
+﻿services: 
+
+  mongodb:
+    image: mongo:latest
+    restart: always
+    container_name: "mongodb"
+    env_file:
+        - db.env
+    networks:
+      - backendapiMongo
+    ports:
+        - "27017:27017"
+    volumes:
+      - "databaseMongo:/data/db"
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    networks:
+        - backendapiMongo
+    depends_on:
+        - mongodb
+    env_file:
+        - express.env
+    ports:
+        - "8081:8081"
+
+  apiserver:
+    build:
+      context: "."
+      dockerfile: ./Dockerfile
+    container_name: "Web-Mongo"
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+        - mongodb
+    networks:
+      - backendapiMongo
+    env_file:
+        - db.env
+
+
+networks:
+  backendapiMongo:
+    driver: bridge
+
+volumes:
+    databaseMongo:
